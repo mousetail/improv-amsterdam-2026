@@ -40,7 +40,7 @@ const openapi = fromHono(app, {
 });
 
 // Register other endpoints
-openapi.post("/dummy/:slug", DummyEndpoint);
+openapi.get("/dummy/:slug", DummyEndpoint);
 
 // Export the Hono app
 export default app;

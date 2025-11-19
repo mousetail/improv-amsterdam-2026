@@ -7,16 +7,7 @@ export class DummyEndpoint extends OpenAPIRoute {
     tags: ["Dummy"],
     summary: "this endpoint is an example",
     operationId: "example-endpoint", // This is optional
-    request: {
-      params: z.object({
-        slug: z.string(),
-      }),
-      body: contentJson(
-        z.object({
-          name: z.string(),
-        })
-      ),
-    },
+    request: {},
     responses: {
       "200": {
         description: "Returns the log details",
