@@ -1,0 +1,16 @@
+{
+  "compatibility_date": "2025-10-08",
+  "main": "src/index.ts",
+  "name": "improv-amsterdam-2026",
+  "upload_source_maps": true,
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "improv-amsterdam-2026-db",
+      "database_id": "848cf53c-c4fe-494e-8e91-247669cc5b24"
+    }
+  ]
+}
