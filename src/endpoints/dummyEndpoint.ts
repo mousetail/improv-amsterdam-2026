@@ -50,6 +50,8 @@ export class DummyEndpoint extends OpenAPIRoute {
       headers: {
         "Cache-Control": "public, max-age=600",
         Vary: "Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
       },
     });
   }
