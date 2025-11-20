@@ -25,24 +25,25 @@ export class DummyEndpoint extends OpenAPIRoute {
   public async handle(c: AppContext) {
     const data = await this.getValidatedData<typeof this.schema>();
 
-    const response = await fetch(
-      "https://gettimeapi.dev/v1/time?timezone=UTC",
-      {
-        cf: {
-          cacheEverything: true,
-          cacheTtlByStatus: { "200-299": 16 * 60 },
-        },
-      }
-    );
-    // const response = await fetch("https://api.zonefestival.com/json/program/", {
-    //   headers: { "Content-type": "application/x-www-form-urlencoded" },
-    //   method: "POST",
-    //   body: postBody,
-    //   cf: {
-    //     cacheTtlByStatus: { "200-299": 15 * 60 },
-    //   },
-    // });
-    const responseData = await response.text();
+    const response = await fetch("https://api.tickettailor.com/v1/events", {
+      headers: {
+        Authorization: "Basic " + btoa(c.env.TICKETTAILOR_API_KEY + ":"),
+      },
+      cf: {
+        cacheEverything: true,
+        cacheTtlByStatus: { "200-299": 16 * 60 },
+      },
+    });
+    const rateLimit = response.headers.get("X-Rate-Limit-Limit");
+    const rateLimitRemaining = response.headers.get("X-Rate-Limit-Remaining");
+    const rateLimitReset = response.headers.get("X-Rate-Limit-Reset");
+    const responseData: { rateLimit: {} } = await response.json();
+
+    responseData["rateLimit"] = {
+      rateLimit,
+      rateLimitRemaining,
+      rateLimitReset,
+    };
 
     return new Response(JSON.stringify(responseData), {
       status: 200,
